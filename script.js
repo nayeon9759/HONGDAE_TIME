@@ -4,6 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtns = document.querySelectorAll('.map-toggle-btn');
     const markers = document.querySelectorAll('.marker');
 
+    // 📌 추가: <img> 요소와 이미지 URL 정의
+    const mapBackgroundImage = document.getElementById('map-background-image');
+
+    const IMAGE_URLS = {
+        '14': 'https://i.postimg.cc/DZgFJHkP/gwageo.png', // 14세 (과거) 지도 이미지 URL
+        '22': 'https://i.postimg.cc/027m26xN/hyeonjae.png' // 22세 (현재) 지도 이미지 URL
+    };
+    // ------------------------------------
+
     // 모달 관련 요소
     const modal = document.getElementById('modal');
     const modalPlaceName = document.getElementById('modal-place-name');
@@ -62,24 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 sub: "14세에게는 미지의 세계였던 곳."
             }
         },
-        "에뛰드하우스": {
+        "길거리 분식집": {
             "22": {
                 main: "지금은 사라지고 옷가게가 된 곳입니다. 나의 14세 추억이 사라진 것을 깨닫고 씁쓸함을 느꼈지만, 홍대의 변화를 받아들여야 했죠.",
                 sub: "추억은 남았지만, 장소는 사라졌다."
             },
             "14": {
                 main: "학원 끝나고 친구들과 500원짜리 떡꼬치를 먹던 곳. 세상에서 가장 맛있었고, 그 순간이 영원할 것만 같았던 소중한 아지트.",
-                sub: "2025년인 현재, 사라진 장소."
-            }
-        },
-      "3POP PC방": {
-            "22": {
-                main: "지금은 사라지고 옷가게가 된 곳입니다. 나의 14세 추억이 사라진 것을 깨닫고 씁쓸함을 느꼈지만, 홍대의 변화를 받아들여야 했죠.",
-                sub: "추억은 남았지만, 장소는 사라졌다."
-            },
-            "14": {
-                main: "오버워치에 푹 빠졌었다. 그때마다 친구들과 이 피시방에 와서 다 같이 게임을 하곤 했다. 지하이고 흡연실이 있는 장소가 익숙치 않았던 어린 나에게는 무서웠던 장소.",
-                sub: "2025년인 현재, 사라진 장소."
+                sub: "가장 행복했던 500원의 맛."
             }
         },
         "AK 플라자": {
@@ -101,11 +100,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentTitleText = is14 ? '🕰️ 14세의 홍대' : '✨ 22세의 홍대';
 
         // 1. 지도 배경 및 제목 업데이트
-        mapArea.className = ''; 
+        mapArea.className = '';
         mapArea.classList.add(currentAgeClass);
-        mapTitle.className = ''; 
+        mapTitle.className = '';
         mapTitle.classList.add(currentTitleClass);
         mapTitle.innerHTML = currentTitleText;
+        
+        // 📌 핵심 수정: <img> 태그의 src 속성 변경
+        mapBackgroundImage.src = IMAGE_URLS[age];
+        mapBackgroundImage.alt = is14 ? '홍대 과거 지도' : '홍대 현재 지도';
+        // ---------------------------------
 
         // 2. 버튼 활성화 상태 업데이트
         toggleBtns.forEach(btn => {
@@ -114,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('active');
             }
         });
-        
+
         // 3. 마커 가시성 업데이트
         markers.forEach(marker => {
             if (marker.dataset.age === age) {
@@ -141,25 +145,25 @@ document.addEventListener('DOMContentLoaded', () => {
     markers.forEach(marker => {
         marker.addEventListener('click', () => {
             const fullName = marker.dataset.name;
-            const placeName = fullName.split(' (')[0]; 
+            const placeName = fullName.split(' (')[0];
             const markerAge = marker.dataset.age;
             const color = marker.dataset.color;
-            
+
             const memoryData = memories[placeName] ? memories[placeName][markerAge] : { main: "추억 기록이 없습니다.", sub: "기록이 없어 아쉽네요." };
-            
+
             // 모달 내용 채우기
             modalPlaceName.textContent = placeName;
-            
+
             // 뱃지 설정
             modalColorBadge.textContent = colorNames[color];
-            modalColorBadge.className = ''; 
+            modalColorBadge.className = '';
             modalColorBadge.classList.add('badge-' + color);
-            
+
             modalMemoryMain.textContent = memoryData.main;
             modalMemorySub.textContent = `"${memoryData.sub}"`;
-            
+
             modalAgeInfo.textContent = `나의 홍대, ${markerAge}세의 기억.`;
-            
+
             // 모달 보여주기
             modal.classList.remove('hidden');
         });
