@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2025 by nayeon9759 (http://jsbin.com/tojobuy/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홍대의 시간의 흐름: 14세 vs 22세</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style id="jsbin-css">
+/* 기본 설정 및 폰트 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f0f2f5; 
+    color: #2c3e50;
+    overflow: hidden; 
+}
+
+#app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 1. 사이드바 (좌측 메뉴) */
+#sidebar {
+    width: 320px;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+#map-title {
+    font-size: 2em;
+    font-weight: 900; 
+    margin-bottom: 25px;
+    padding: 15px 0;
+    text-align: center;
+    border-bottom: 3px solid;
+    transition: all 0.5s ease;
+}
+
+.title-14 {
+    color: #3498db; 
+    border-color: #3498db;
+}
+
+.title-22 {
+    color: #e67e22; 
+    border-color: #e67e22;
+}
+
+/* 시간 전환 버튼 그룹 */
+#map-control {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.map-toggle-btn {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid #bdc3c7;
+    background-color: #f7f9fb;
+    color: #2c3e50;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.map-toggle-btn.active[data-age="14"] {
+    background-color: #3498db;
+    color: #fff;
+    border-color: #3498db;
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+}
+
+.map-toggle-btn.active[data-age="22"] {
+    background-color: #e67e22;
+    color: #fff;
+    border-color: #e67e22;
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4);
+}
+
+/* 색깔 설명 및 지도 설명 박스 */
+#color-legend, #map-explanation {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+}
+
+/* 색깔 점 디자인 */
+.color-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.color-dot.red { background-color: #e74c3c; } 
+.color-dot.green { background-color: #2ecc71; }
+.color-dot.yellow { background-color: #f1c40f; } 
+
+/* style.css 파일 */
+
+/* style.css 파일 */
+
+/* style.css 파일 */
+
+/* style.css 파일 */
+
+/* 2. 지도 영역 */
+#map-area {
+    flex-grow: 1;
+    position: relative;
+    
+    /* 💥💥💥 꽉 채우면서 화질 유지 (최종) 💥💥💥 */
+    background-size: cover; 
+    
+    /* 이미지가 영역의 중앙에 오도록 함 */
+    background-position: center;
+    
+    /* 이미지 반복 방지 */
+    background-repeat: no-repeat; 
+    
+    transition: background-image 0.5s ease;
+    
+    /* 💥💥💥 문제의 원인이 된 filter 속성 완전히 제거 💥💥💥 */
+    /* filter: brightness(1.1) contrast(1.1) saturate(1.1); <--- 이 줄을 삭제합니다. */
+    
+    /* 화질 개선 속성 유지 */
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: crisp-edges;
+}
+
+/* 🚨🚨🚨 이미지 링크는 최종 직접 링크로 잘 적용되었습니다. (유지) 🚨🚨🚨 */
+.age-22-map {
+    background-image: url('https://i.postimg.cc/7Lnrd0RL/hyeonjae.png'); 
+}
+
+.age-14-map {
+    background-image: url('https://i.postimg.cc/DZgFJHkP/gwageo.png'); 
+}
+
+/* 3. 장소 마커 */
+.marker {
+    position: absolute;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    opacity: 0; 
+}
+
+.marker.visible {
+    opacity: 1;
+}
+
+.marker-name {
+    background-color: rgba(44, 62, 80, 0.85); 
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    font-weight: 400;
+    white-space: nowrap;
+    margin-bottom: 5px;
+    transform: translateY(-100%); 
+    transition: background-color 0.3s;
+}
+
+/* 마커 점 */
+.marker::after {
+    content: '';
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    display: block;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.marker:hover::after {
+    transform: scale(1.3);
+}
+
+/* 색깔별 마커 점 색상 설정 */
+.marker[data-color="red"]::after { background-color: #e74c3c; }
+.marker[data-color="green"]::after { background-color: #2ecc71; }
+.marker[data-color="yellow"]::after { background-color: #f1c40f; }
+
+/* 4. 모달 (팝업) 스타일 - 깔끔한 카드 스타일 */
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding: 20px;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* CGV 팝업을 참고한 좌측 상단 디자인 요소 */
+.modal-design-dot {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #e74c3c; /* 빨간 녹화 버튼 느낌 */
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.3em;
+    color: #95a5a6;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#modal-place-name {
+    font-size: 1.8em;
+    font-weight: 900;
+    margin: 5px 0 15px 35px; 
+    color: #34495e;
+}
+
+/* 색깔별 뱃지 스타일 */
+#modal-color-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* 뱃지 색상 정의 */
+.badge-red { background-color: #e74c3c; }
+.badge-green { background-color: #2ecc71; }
+.badge-yellow { background-color: #f1c40f; color: #333; }
+
+
+.modal-body-text {
+    padding: 0 5px;
+}
+
+#modal-memory-main {
+    line-height: 1.7;
+    font-size: 1.1em;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.modal-sub-quote {
+    font-style: italic;
+    color: #555;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-left: 4px solid #3498db; 
+    line-height: 1.5;
+    font-size: 0.95em;
+    margin-top: 15px;
+}
+
+.modal-footer-age {
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+#modal-age-info {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+    <div id="app-container">
+        <aside id="sidebar">
+            <h2 id="map-title" class="title-14">🕰️ 14세의 홍대</h2>
+            
+            <div id="map-control">
+                <button class="map-toggle-btn active" data-age="14"><i class="fas fa-child"></i> 14세의 시선</button>
+                <button class="map-toggle-btn" data-age="22"><i class="fas fa-user-graduate"></i> 22세의 시선</button>
+            </div>
+
+          <div id="color-legend">
+    <h3>장소 색깔 의미</h3> <div class="legend-item red-explanation">
+        <span class="color-dot red"></span>
+        <p>
+            <strong>싫은 장소</strong><br>
+            좋지 않은 기억이 있는 곳
+        </p>
+    </div>
+    
+    <div class="legend-item green-explanation">
+        <span class="color-dot green"></span>
+        <p>
+            <strong>좋은 장소</strong><br>
+            행복하고 소중한 추억이 담긴 곳
+        </p>
+    </div>
+    
+    <div class="legend-item yellow-explanation">
+        <span class="color-dot yellow"></span>
+        <p>
+            <strong>보통 장소</strong><br>
+            좋지도 싫지도 않은 평범한 곳
+        </p>
+    </div>
+</div>
+            
+            <hr>
+            
+            <div id="map-explanation">
+                <h3>📖 프로젝트 개요</h3>
+                <p>이 지도는 **14살**의 나와 **22살**인 지금의 내가 바라본 **홍대의 시간의 흐름**과, 각 장소에 얽힌 **개인적인 추억**을 기록합니다. 마커를 클릭하여 장소에 남겨진 시간을 확인해 보세요.</p>
+            </div>
+        </aside>
+
+       <main id="map-area" class="age-14-map">
+    <div class="marker visible" data-name="분식집" data-color="green" data-age="14" style="top: 55%; left: 33%;">
+        <span class="marker-name">분식집</span>
+    </div>
+    <div class="marker visible" data-name="AK 플라자" data-color="red" data-age="14" style="top: 85%; left: 16%;">
+        <span class="marker-name">AK 플라자</span>
+    </div>
+    <div class="marker visible" data-name="홍대 놀이터" data-color="yellow" data-age="14" style="top: 55%; left: 58%;">
+        <span class="marker-name">홍대 놀이터</span>
+    </div>
+    <div class="marker" data-name="테일러 커피" data-color="green" data-age="22" style="top: 25%; left: 45%;">
+        <span class="marker-name">테일러 커피</span>
+    </div>
+    <div class="marker" data-name="수 노래방" data-color="red" data-age="22" style="top: 48%; left: 63%;">
+        <span class="marker-name">수 노래방</span>
+    </div>
+    <div class="marker" data-name="은하수 다방" data-color="green" data-age="22" style="top: 68%; left: 35%;">
+        <span class="marker-name">은하수 다방</span>
+    </div>
+    </main>
+    </div>
+
+    <div id="modal" class="hidden">
+        <div class="modal-content">
+            <div class="modal-design-dot"></div> 
+            <span class="close-btn"><i class="fas fa-times"></i></span>
+            
+            <h3 id="modal-place-name">장소 이름</h3>
+            
+            <div id="modal-color-badge"></div>
+            
+            <div class="modal-body-text">
+                <p id="modal-memory-main"></p>
+                <hr>
+                <p id="modal-memory-sub" class="modal-sub-quote"></p>
+            </div>
+            <div class="modal-footer-age">
+                <p id="modal-age-info"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+<script id="jsbin-javascript">
+document.addEventListener('DOMContentLoaded', () => {
+    const mapArea = document.getElementById('map-area');
+    const mapTitle = document.getElementById('map-title');
+    const toggleBtns = document.querySelectorAll('.map-toggle-btn');
+    const markers = document.querySelectorAll('.marker');
+
+    // 모달 관련 요소
+    const modal = document.getElementById('modal');
+    const modalPlaceName = document.getElementById('modal-place-name');
+    const modalColorBadge = document.getElementById('modal-color-badge');
+    const modalMemoryMain = document.getElementById('modal-memory-main');
+    const modalMemorySub = document.getElementById('modal-memory-sub');
+    const modalAgeInfo = document.getElementById('modal-age-info');
+    const closeBtn = document.querySelector('.close-btn');
+
+    // 색깔 이름 매핑
+    const colorNames = {
+        'red': '싫은 장소',
+        'green': '좋은 장소',
+        'yellow': '보통 장소'
+    };
+
+    // 추억 데이터 (메인 내용과 인용구 형태의 서브 내용 구분)
+    const memories = {
+        "테일러 커피": {
+            "22": {
+                main: "졸업 후 첫 면접을 앞두고 무거운 책임감을 느꼈던 곳입니다. 씁쓸하면서도 달콤한 커피 맛처럼, 불안과 기대로 가득했던 나의 22세의 공간.",
+                sub: "성인이 되어서야 비로소 알게 된 '홍대 감성'."
+            },
+            "14": {
+                main: "14세 때는 몰랐던, 어른들의 멋진 카페였습니다. 왠지 모르게 들어가기 어려웠지만, 나도 언젠가 저런 곳에서 여유를 즐기고 싶다고 생각했죠.",
+                sub: "어린 시절의 '어른스러운' 로망."
+            }
+        },
+        "홍대 놀이터": {
+            "22": {
+                main: "여전히 자유분방한 에너지가 넘치지만, 나는 더 이상 관객일 뿐입니다. 잠시 벤치에 앉아 지나가는 청춘들을 보며 나의 14세를 회상합니다.",
+                sub: "변하지 않는 곳에서 변해버린 나를 발견하다."
+            },
+            "14": {
+                main: "친구들과 춤 연습을 하거나 플리마켓에서 신기한 물건들을 구경하던 아지트였습니다. 가장 순수하고 열정적이었던 추억이 가득한 장소.",
+                sub: "우리의 모든 것이 시작된 곳."
+            }
+        },
+        "수 노래방": {
+            "22": {
+                main: "취업 스트레스 해소 1순위. 동기들과 새벽까지 소리 지르며 노래를 불렀던 곳입니다. 다음 날의 피곤함보다 지금의 해방감이 중요했던 그 날 밤.",
+                sub: "마이크를 잡으면 모든 것이 잊혀지는 해방감."
+            },
+            "14": {
+                main: "중학생 때 몰래 교복 입고 갔다가 선생님을 만날까봐 조마조마했던 기억입니다. 그땐 노래 한 곡 부르는 것도 큰 일탈이었죠.",
+                sub: "사춘기의 아슬아슬한 일탈의 추억."
+            }
+        },
+        "은하수 다방": {
+            "22": {
+                main: "화려한 홍대 속에서 변치 않는 낭만을 발견하여 위로를 받은 곳입니다. 인디밴드 공연의 잔잔한 여운과 함께 따뜻한 차를 마셨습니다.",
+                sub: "홍대에도 '시간이 멈춘' 공간이 있다."
+            },
+            "14": {
+                main: "어둡고 오래된 간판에 무심하게 지나쳤던 곳입니다. 왠지 어른들만 가는 곳 같아서 가볼 생각조차 못했던 신비로운 장소였죠.",
+                sub: "14세에게는 미지의 세계였던 곳."
+            }
+        },
+        "길거리 분식집": {
+            "22": {
+                main: "지금은 사라지고 옷가게가 된 곳입니다. 나의 14세 추억이 사라진 것을 깨닫고 씁쓸함을 느꼈지만, 홍대의 변화를 받아들여야 했죠.",
+                sub: "추억은 남았지만, 장소는 사라졌다."
+            },
+            "14": {
+                main: "학원 끝나고 친구들과 500원짜리 떡꼬치를 먹던 곳. 세상에서 가장 맛있었고, 그 순간이 영원할 것만 같았던 소중한 아지트.",
+                sub: "가장 행복했던 500원의 맛."
+            }
+        },
+        "AK 플라자": {
+            "22": {
+                main: "친구를 기다릴 때 잠시 들러 구경하는 정도의 장소. 예전만큼의 특별함은 없지만, 여전히 홍대의 랜드마크로서 기능하고 있습니다.",
+                sub: "지루함을 달래는 잠시의 쉼터."
+            },
+            "14": {
+                main: "새 학기 옷을 사거나 친구들끼리 모여 최신 유행하는 물건들을 구경하던 꿈의 공간이었습니다. 돈은 없어도 보는 것만으로도 행복했어요.",
+                sub: "그때는 이곳이 '힙' 그 자체였다."
+            }
+        }
+    };
+
+    function updateMap(age) {
+        const is14 = age === '14';
+        const currentAgeClass = is14 ? 'age-14-map' : 'age-22-map';
+        const currentTitleClass = is14 ? 'title-14' : 'title-22';
+        const currentTitleText = is14 ? '🕰️ 14세의 홍대' : '✨ 22세의 홍대';
+
+        // 1. 지도 배경 및 제목 업데이트
+        mapArea.className = ''; 
+        mapArea.classList.add(currentAgeClass);
+        mapTitle.className = ''; 
+        mapTitle.classList.add(currentTitleClass);
+        mapTitle.innerHTML = currentTitleText;
+
+        // 2. 버튼 활성화 상태 업데이트
+        toggleBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.age === age) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // 3. 마커 가시성 업데이트
+        markers.forEach(marker => {
+            if (marker.dataset.age === age) {
+                marker.classList.add('visible');
+            } else {
+                marker.classList.remove('visible');
+            }
+        });
+    }
+
+    // 초기 지도 설정 (14세)
+    updateMap('14');
+
+    // 맵 전환 버튼 이벤트 리스너
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // 버튼 자체 또는 아이콘을 클릭해도 동작하도록 .closest 사용
+            const newAge = e.target.closest('.map-toggle-btn').dataset.age;
+            updateMap(newAge);
+        });
+    });
+
+    // 마커 클릭 이벤트 리스너 (팝업 표시)
+    markers.forEach(marker => {
+        marker.addEventListener('click', () => {
+            const fullName = marker.dataset.name;
+            const placeName = fullName.split(' (')[0]; 
+            const markerAge = marker.dataset.age;
+            const color = marker.dataset.color;
+            
+            const memoryData = memories[placeName] ? memories[placeName][markerAge] : { main: "추억 기록이 없습니다.", sub: "기록이 없어 아쉽네요." };
+            
+            // 모달 내용 채우기
+            modalPlaceName.textContent = placeName;
+            
+            // 뱃지 설정
+            modalColorBadge.textContent = colorNames[color];
+            modalColorBadge.className = ''; 
+            modalColorBadge.classList.add('badge-' + color);
+            
+            modalMemoryMain.textContent = memoryData.main;
+            modalMemorySub.textContent = `"${memoryData.sub}"`;
+            
+            modalAgeInfo.textContent = `나의 홍대, ${markerAge}세의 기억.`;
+            
+            // 모달 보여주기
+            modal.classList.remove('hidden');
+        });
+    });
+
+    // 모달 닫기 이벤트 리스너
+    closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            modal.classList.add('hidden');
+        }
+    });
+});
+</script>
+</body>
+</html>
