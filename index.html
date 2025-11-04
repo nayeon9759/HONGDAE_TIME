@@ -1,162 +1,236 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홍대의 시간의 흐름: 14세 vs 22세</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>홍대의 시간의 흐름: 14세 vs 22세</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  
 
-  
-    <div id="app-container">
-        <aside id="sidebar">
-          <h1> 홍대, 8년의 시간 궤적</h1>
-            <h2 id="map-title" class="title-14">🕰️ 14세의 홍대</h2>
-            
-            <div id="map-control">
-                <button class="map-toggle-btn active" data-age="14"><i class="fas fa-child"></i> 14세의 시선</button>
-                <button class="map-toggle-btn" data-age="22"><i class="fas fa-user-graduate"></i> 22세의 시선</button>
-            </div>
 
-          <div id="color-legend">
-    <h3>장소 색깔 의미</h3> <div class="legend-item red-explanation">
-        <span class="color-dot red"></span>
-        <p>
-            <strong>싫은 장소</strong><br>
-            좋지 않은 기억이 있는 곳
-        </p>
-    </div>
-    
-    <div class="legend-item green-explanation">
-        <span class="color-dot green"></span>
-        <p>
-            <strong>좋은 장소</strong><br>
-            행복하고 소중한 추억이 담긴 곳
-        </p>
-    </div>
-    
-    <div class="legend-item yellow-explanation">
-        <span class="color-dot yellow"></span>
-        <p>
-            <strong>보통 장소</strong><br>
-            좋지도 싫지도 않은 평범한 곳
-        </p>
-    </div>
+
+  <div id="app-container">
+    <aside id="sidebar">
+          <h1> <strong> 홍대 토박이 <br>김나연의 기록 </strong></br></h1>
+      <h2 id="map-title" class="title-14">🕰️ 14세의 홍대</h2>
+     
+      <div id="map-control">
+        <button class="map-toggle-btn active" data-age="14"><i class="fas fa-child"></i> 14세의 시선</button>
+        <button class="map-toggle-btn" data-age="22"><i class="fas fa-user-graduate"></i> 22세의 시선</button>
+      </div>
+
+     <div id="color-legend">
+  <h3>장소 색깔 의미</h3> <div class="legend-item red-explanation">
+    <span class="color-dot red"></span>
+    <p>
+      <strong>싫은 장소</strong><br>
+      좋지 않은 기억이 있는 곳
+    </p>
+  </div>
+ 
+  <div class="legend-item green-explanation">
+    <span class="color-dot green"></span>
+    <p>
+      <strong>좋은 장소</strong><br>
+      행복하고 소중한 추억이 담긴 곳
+    </p>
+  </div>
+ 
+  <div class="legend-item yellow-explanation">
+    <span class="color-dot yellow"></span>
+    <p>
+      <strong>보통 장소</strong><br>
+      좋지도 싫지도 않은 평범한 곳
+    </p>
+  </div>
 </div>
-           
-            <hr>
-            
-            <div id="map-explanation">
-                <h3>📖 프로젝트 개요</h3>
-                <p>
-        이 지도는 과거 14살, 현재 22살인 제가 바라본 홍대의 시간의 흐름과, 
-        각 장소에 얽힌 개인적인 추억을 기록합니다.
-                  <br><br> * 마커를 클릭하여 장소에 남겨진 시간을 확인해 보세요. 
-    </p>
-            </div>
-        </aside>
+     
+    
+      <hr>
+     
+      <div id="map-explanation">
+        <h3> 프로젝트 개요</h3>
+        <p>
+    이 지도는 과거 14살, 현재 22살인 홍대 토박이인 제가 바라본 홍대의 시간의 흐름과,
+    각 장소에 얽힌 개인적인 추억을 기록합니다.
+         <br><br> * 마커를 클릭하여 장소에 남겨진 내용을 확인해 보세요.
+  </p>
+      </div>
+    </aside>
 
-       <main id="map-area" class="age-14-map">
-            <img src="https://i.postimg.cc/DZgFJHkP/gwageo.png" alt="홍대 과거 지도" id="map-background-image">     
+   <main id="map-area" class="age-14-map">
+      <img src="https://i.postimg.cc/DZgFJHkP/gwageo.png" alt="홍대 과거 지도" id="map-background-image">   
          <div class="marker visible" data-name="에뛰드하우스" data-color="green" data-age="14" style="top: 75%; left: 40.5%;">
-        <span class="marker-name">에뛰드하우스</span>
-    </div>
-    <div class="marker visible" data-name="3POP PC방" data-color="red" data-age="14" style="top: 22%; left: 51.5%;">
-        <span class="marker-name">3POP PC방</span>
-    </div>
-    <div class="marker visible" data-name="엽기떡볶이" data-color="yellow" data-age="14" style="top: 64.5%; left: 65.3%;">
-        <span class="marker-name">엽기떡볶이</span>
-         </div>
-         
-    <div class="marker visible" data-name="세계과자할인점" data-color="green" data-age="14" style="top: 13%; left: 40.5%;">
-    <div class="marker-name">세계과자할인점</div>
+    <span class="marker-name">에뛰드하우스</span>
+  </div>
+  <div class="marker visible" data-name="3POP PC방" data-color="red" data-age="14" style="top: 22%; left: 51.5%;">
+    <span class="marker-name">3POP PC방</span>
+  </div>
+  <div class="marker visible" data-name="엽기떡볶이" data-color="yellow" data-age="14" style="top: 64.5%; left: 65.3%;">
+    <span class="marker-name">엽기떡볶이</span>
+    </div>
+    
+  <div class="marker visible" data-name="세계과자할인점" data-color="green" data-age="14" style="top: 13%; left: 40.5%;">
+  <div class="marker-name">세계과자할인점</div>
 </div>
 <div class="marker visible" data-name="두끼" data-color="green" data-age="14" style="top: 80%; left: 20.5%;">
-    <div class="marker-name">두끼</div>
-  
+  <div class="marker-name">두끼</div>
+
 </div>
-         
-<div class="marker visible" data-name="락휴" data-color="green" data-age="14" style="top: 82%; left: 5.5%;">
-    <div class="marker-name">락휴</div>
-</div
-         
+    
+    
 <div class="marker visible" data-name="서교초등학교" data-color="green" data-age="14" style="top: 82%; left: 76%;">
-    <div class="marker-name">서교초등학교</div>
+  <div class="marker-name">서교초등학교</div>
 </div>
 <div class="marker visible" data-name="다이소" data-color="green" data-age="14" style="top: 49%; left: 43.5%;">
-    <div class="marker-name">다이소</div>
+  <div class="marker-name">다이소</div>
 </div>
 <div class="marker visible" data-name="애슐리" data-color="green" data-age="14" style="top: 60%; left: 5.5%;">
-    <div class="marker-name">애슐리</div>
+  <div class="marker-name">애슐리</div>
 </div>
-<div class="marker visible" data-name="맥도날드" data-color="green" data-age="14" style="top: 30%; left: 65.2%;">
-    <div class="marker-name">맥도날드</div>
-</div>     
-  
-        <div class="marker visible" data-name="원더플레이스" data-color="yellow" data-age="14" style="top: 40%; left: 44.5%;">
-    <div class="marker-name">원더플레이스</div>
+<div class="marker visible" data-name="맥도날드" data-color="green" data-age="14" style="top: 32%; left: 61.2%;">
+  <div class="marker-name">맥도날드</div>
+</div> 
+
+<div class="marker visible" data-name="싹쓰리" data-color="green" data-age="14" style="top: 94%; left: 64.2%;">
+  <div class="marker-name">=싹쓰리</div>
 </div>
-<div class="marker visible" data-name="스파오" data-color="yellow" data-age="14" style="top: 38%; left: 71.5%;">
-    <div class="marker-name">스파오</div>
+         
+<div class="marker visible" data-name="카카오프렌즈샵" data-color="green" data-age="14" style="top: 56%; left:25%;">
+  <div class="marker-name">카카오프렌즈샵</div>
 </div>
-<div class="marker visible" data-name="CGV" data-color="yellow" data-age="14" style="top: 43%; left: 29.5%;">
-    <div class="marker-name">CGV</div>
+<div class="marker visible" data-name="던킨" data-color="green" data-age="14" style="top: 33%; left: 21.8%;">
+  <div class="marker-name">=던킨</div>
+</div>      
+         
+<div class="marker visible" data-name="락휴" data-color="green" data-age="14" style="top: 90%; left: 5.8%;">
+  <div class="marker-name">=락휴</div>
+</div>         
+         
+
+    <div class="marker visible" data-name="원더플레이스" data-color="yellow" data-age="14" style="top: 40%; left: 34.5%;">
+  <div class="marker-name">원더플레이스</div>
+</div>
+<div class="marker visible" data-name="스파오" data-color="yellow" data-age="14" style="top: 39%; left: 71.5%;">
+  <div class="marker-name">스파오</div>
+</div>
+<div class="marker visible" data-name="CGV" data-color="yellow" data-age="14" style="top: 43%; left: 13.5%;">
+  <div class="marker-name">CGV</div>
 </div>
 <div class="marker visible" data-name="Q코인노래방" data-color="yellow" data-age="14" style="top: 47%; left: 85.5%;">
-    <div class="marker-name">Q코인노래방</div>
+  <div class="marker-name">Q코인노래방</div>
 </div>
 
 <div class="marker visible" data-name="버스킹존" data-color="yellow" data-age="14" style="top: 86.5%; left: 42.5%;">
-    <div class="marker-name">버스킹존</div>
-</div> 
+  <div class="marker-name">버스킹존</div>
+</div>
          
- <div class="marker visible" data-name="버스정류장" data-color="yellow" data-age="14" style="top: 9%; left: 25.5%;">
-    <div class="marker-name">버스정류장</div>
-</div>         
-     <div class="marker visible" data-name="버스정류장" data-color="yellow" data-age="14" style="top: 9%; left: 25.5%;">
-    <div class="marker-name">버스정류장</div>
-</div>         
-    
-    <div class="marker" data-name="지하철" data-color="red" data-age="22" style="top: 9%; left: 25.5%;">
-        <span class="marker-name">지하철</span>
-    </div>
-    <div class="marker" data-name="커피덕" data-color="red" data-age="22" style="top: 22%; left: 43%;">
-        <span class="marker-name">커피덕</span>
-    </div>
+<div class="marker visible" data-name="삼성스토어" data-color="yellow" data-age="14" style="top: 19%; left: 30%;">
+  <div class="marker-name">삼성스토어</div>
+</div>
+         
+<div class="marker visible" data-name="버스정류장" data-color="yellow" data-age="14" style="top: 13%; left: 6%;">
+  <div class="marker-name">버스정류장</div>
+</div>         
+
+<div class="marker visible" data-name="엉터리생고기" data-color="yellow" data-age="14" style="top: 88.5%; left: 54.5%;">
+  <div class="marker-name">엉터리생고기</div>
+</div>         
+    
+         
+    <div class="marker visible" data-name="지하철" data-color="red" data-age="22" style="top: 13%; left: 7%;">
+  <div class="marker-name">지하철</div>
+</div>      
+ 
+  <div class="marker" data-name="커피덕" data-color="red" data-age="22" style="top: 22%; left: 29%;">
+    <span class="marker-name">커피덕</span>
+  </div>
         <div class="marker" data-name="그린섬" data-color="red" data-age="22" style="top: 58%; left: 88%;">
-        <span class="marker-name">그린섬</span>
-    </div> 
+    <span class="marker-name">그린섬</span>
+  </div> 
          
-    <div class="marker" data-name="포토그레이" data-color="green" data-age="22" style="top: 93%; left: 63%;">
-        <span class="marker-name">포토그레이</span>
-    </div>
-    </main>
-    </div>
+  <div class="marker" data-name="포토그레이" data-color="green" data-age="22" style="top: 94%; left: 55%;">
+    <span class="marker-name">포토그레이</span>
+  </div>
+         <div class="marker" data-name="홍익대학교" data-color="green" data-age="22" style="top: 93%; left: 73%;">
+    <span class="marker-name">홍익대학교</span> </div> 
+         
+           <div class="marker" data-name="스팟칼라" data-color="green" data-age="22" style="top: 65%; left: 63%;">
+    <span class="marker-name">스팟칼라</span> </div> 
+         
+         <div class="marker" data-name="보승회관" data-color="green" data-age="22" style="top: 50%; left: 45%;">
+    <span class="marker-name">보승회관</span>
+  </div>
+         <div class="marker" data-name="발바리네" data-color="green" data-age="22" style="top: 73%; left: 81.3%;">
+    <span class="marker-name">발바리네</span> </div> 
+         
+           <div class="marker" data-name="다이소" data-color="green" data-age="22" style="top: 24%; left: 52.7%;">
+    <span class="marker-name">다이소</span> </div> 
+         
+       <div class="marker" data-name="공차" data-color="green" data-age="22" style="top: 38%; left: 71%;">
+    <span class="marker-name">공차</span>
+  </div>   
+    <div class="marker" data-name="AK 플라자" data-color="yellow" data-age="22" style="top: 34%; left: 61%;">
+    <span class="marker-name">AK 플라자</span>
+  </div> 
+           <div class="marker" data-name="사랑니아프니치과" data-color="yellow" data-age="22" style="top: 63%; left: 5%;">
+    <span class="marker-name">사랑니아프니치과</span>
+  </div> 
+      <div class="marker" data-name="CGV" data-color="yellow" data-age="22" style="top: 30%; left: 20.5%;">
+    <span class="marker-name">CGV</span>
+  </div>      
+    <div class="marker" data-name="시장을여는사람들" data-color="yellow" data-age="22" style="top: 94%; left: 38%;">
+    <span class="marker-name">시장을여는사람들</span>
+  </div>
+           <div class="marker" data-name="L7 홍대" data-color="yellow" data-age="22" style="top: 43%; left: 12%;">
+    <span class="marker-name">L7 홍대</span>
+  </div>   
+    <div class="marker" data-name="악쓰는하마" data-color="yellow" data-age="22" style="top: 69%; left: 22%;">
+    <span class="marker-name">악쓰는하마</span>
+  </div> 
+       <div class="marker" data-name="버스킹존" data-color="yellow" data-age="22" style="top: 75%; left: 44%;">
+    <span class="marker-name">버스킹존</span>
+  </div>   
+    <div class="marker" data-name="역전할머니맥주" data-color="yellow" data-age="22" style="top: 92%; left: 12%;">
+    <span class="marker-name">역전할머니맥주</span>
+  </div>
+       <div class="marker" data-name="할리스커피" data-color="green" data-age="22" style="top: 13%; left: 40%;">
+    <span class="marker-name">할리스커피</span>
+  </div>   
+    <div class="marker" data-name="올리브영" data-color="green" data-age="22" style="top: 42%; left: 34%;">
+    <span class="marker-name">올리브영</span>
+  </div> 
+     <div class="marker" data-name="오렌즈" data-color="green" data-age="22" style="top: 55%; left: 26%;">
+    <span class="marker-name">오렌즈</span>
+  </div>     
+  </div>
+  </div>
+  </main>
+  </div>
 
-    <div id="modal" class="hidden">
-        <div class="modal-content">
-            <div class="modal-design-dot"></div> 
-            <span class="close-btn"><i class="fas fa-times"></i></span>
-            
-            <h3 id="modal-place-name">장소 이름</h3>
-            
-            <div id="modal-color-badge"></div>
-            
-            <div class="modal-body-text">
-                <p id="modal-memory-main"></p>
-                <hr>
-                <p id="modal-memory-sub" class="modal-sub-quote"></p>
-            </div>
-            <div class="modal-footer-age">
-                <p id="modal-age-info"></p>
-            </div>
-        </div>
-    </div>
+  <div id="modal" class="hidden">
+    <div class="modal-content">
+      <div class="modal-design-dot"></div>
+      <span class="close-btn"><i class="fas fa-times"></i></span>
+     
+      <h3 id="modal-place-name">장소 이름</h3>
+     
+      <div id="modal-color-badge"></div>
+     
+      <div class="modal-body-text">
+        <p id="modal-memory-main"></p>
+        <hr>
+        <p id="modal-memory-sub" class="modal-sub-quote"></p>
+      </div>
+      <div class="modal-footer-age">
+        <p id="modal-age-info"></p>
+      </div>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
