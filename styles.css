@@ -1,169 +1,170 @@
 /* 기본 설정 및 폰트 */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f0f2f5; 
-    color: #2c3e50;
-    overflow: hidden; 
+ margin: 0;
+ padding: 0;
+ font-family: 'Noto Sans KR', sans-serif;
+ background-color: #f0f2f5;
+ color: #2c3e50;
+ overflow: hidden;
 }
 
 #app-container {
-    display: flex;
-    height: 100vh;
+ display: flex;
+ height: 100vh;
 }
 
 /* 1. 사이드바 (좌측 메뉴) */
 #sidebar {
-    width: 320px;
-    padding: 30px;
-    background-color: #ffffff;
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    z-index: 10;
+ width: 320px;
+ padding: 30px;
+ background-color: #ffffff;
+ box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+ display: flex;
+ flex-direction: column;
+ z-index: 10;
+
 }
 
 #map-title {
-    font-size: 2em;
-    font-weight: 900; 
-    margin-bottom: 25px;
-    padding: 15px 0;
-    text-align: center;
-    border-bottom: 3px solid;
-    transition: all 0.5s ease;
+ font-size: 2em;
+ font-weight: 900;
+ margin-bottom: 25px;
+ padding: 10px 0;
+ border-bottom: 3px solid;
+  margin-top: 5px;
+ transition: all 0.5s ease;
 }
 
 .title-14 {
-    color: #3498db; 
-    border-color: #3498db;
+ color: #3498db;
+ border-color: #3498db;
 }
 
 .title-22 {
-    color: #e67e22; 
-    border-color: #e67e22;
+ color: #e67e22;
+ border-color: #e67e22;
 }
 
 /* 시간 전환 버튼 그룹 */
 #map-control {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 40px;
+ display: flex;
+ gap: 10px;
+ margin-bottom: 40px;
 }
 
 .map-toggle-btn {
-    flex-grow: 1;
-    padding: 12px 15px;
-    border: 1px solid #bdc3c7;
-    background-color: #f7f9fb;
-    color: #2c3e50;
-    cursor: pointer;
-    font-size: 0.95em;
-    font-weight: 700;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+ flex-grow: 1;
+ padding: 12px 15px;
+ border: 1px solid #bdc3c7;
+ background-color: #f7f9fb;
+ color: #2c3e50;
+ cursor: pointer;
+ font-size: 0.95em;
+ font-weight: 700;
+ border-radius: 6px;
+ transition: all 0.3s ease;
 }
 
 .map-toggle-btn.active[data-age="14"] {
-    background-color: #3498db;
-    color: #fff;
-    border-color: #3498db;
-    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+ background-color: #3498db;
+ color: #fff;
+ border-color: #3498db;
+ box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
 }
 
 .map-toggle-btn.active[data-age="22"] {
-    background-color: #e67e22;
-    color: #fff;
-    border-color: #e67e22;
-    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4);
+ background-color: #e67e22;
+ color: #fff;
+ border-color: #e67e22;
+ box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4);
 }
 
 /* 색깔 설명 및 지도 설명 박스 */
 #color-legend, #map-explanation {
-    margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
+ margin-bottom: 20px;
+ padding: 15px;
+ border-radius: 8px;
+ background-color: #f9f9f9;
+ border: 1px solid #eee;
 }
 
 /* 색깔 점 디자인 */
 .color-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+ display: inline-block;
+ width: 10px;
+ height: 10px;
+ border-radius: 50%;
+ margin-right: 8px;
+ vertical-align: middle;
+ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.color-dot.red { background-color: #e74c3c; } 
+.color-dot.red { background-color: #e74c3c; }
 .color-dot.green { background-color: #2ecc71; }
-.color-dot.yellow { background-color: #f1c40f; } 
+.color-dot.yellow { background-color: #f1c40f; }
 
 /* 2. 지도 영역 (Main) 및 배경 이미지 설정 수정 */
 #map-area {
-    flex-grow: 1;
-    position: relative; /* 마커의 absolute 위치 기준점 */
-    overflow: hidden;
+ flex-grow: 1;
+ position: relative; /* 마커의 absolute 위치 기준점 */
+ overflow: hidden;
 }
 
 #map-background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 이미지를 영역에 맞게 꽉 채우며 잘리지 않게 (원본 비율 유지) */
-    /* object-fit: contain; /* 이미지를 영역 내에 원본 해상도대로 표시 (여백 생길 수 있음) */
-    z-index: 1; /* 마커보다 아래에 배치 */
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ object-fit: cover; /* 이미지를 영역에 맞게 꽉 채우며 잘리지 않게 (원본 비율 유지) */
+ /* object-fit: contain; /* 이미지를 영역 내에 원본 해상도대로 표시 (여백 생길 수 있음) */
+ z-index: 1; /* 마커보다 아래에 배치 */
 }
 
 /* 3. 장소 마커 */
 .marker {
-    position: absolute;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: opacity 0.3s ease;
-    opacity: 0; 
-    z-index: 5; /* 지도 이미지보다 위에 배치 */
+ position: absolute;
+ cursor: pointer;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ transition: opacity 0.3s ease;
+ opacity: 0;
+ z-index: 5; /* 지도 이미지보다 위에 배치 */
 }
 
 .marker.visible {
-    opacity: 1;
+ opacity: 1;
 }
 
 .marker-name {
-    background-color: rgba(44, 62, 80, 0.85); 
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.85em;
-    font-weight: 400;
-    white-space: nowrap;
-    margin-bottom: 5px;
-    transform: translateY(-100%); 
-    transition: background-color 0.3s;
+ background-color: rgba(44, 62, 80, 0.85);
+ color: #fff;
+ padding: 5px 10px;
+ border-radius: 5px;
+ font-size: 0.85em;
+ font-weight: 400;
+ white-space: nowrap;
+ margin-bottom: 5px;
+ transform: translateY(-100%);
+ transition: background-color 0.3s;
 }
 
 /* 마커 점 */
 .marker::after {
-    content: '';
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 3px solid #fff;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    display: block;
-    transform: scale(1);
-    transition: transform 0.2s;
+ content: '';
+ width: 15px;
+ height: 15px;
+ border-radius: 50%;
+ border: 3px solid #fff;
+ box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+ display: block;
+ transform: scale(1);
+ transition: transform 0.2s;
 }
 
 .marker:hover::after {
-    transform: scale(1.3);
+ transform: scale(1.3);
 }
 
 /* 색깔별 마커 점 색상 설정 */
@@ -173,70 +174,74 @@ body {
 
 /* 4. 모달 (팝업) 스타일 - 깔끔한 카드 스타일 */
 #modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0, 0, 0, 0.6);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ z-index: 2000;
 }
 
 #modal.hidden {
-    display: none;
+ display: none;
 }
 
 .modal-content {
-    background-color: #fff;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 450px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    position: relative;
-    padding: 20px;
-    animation: slideIn 0.3s ease-out;
+ background-color: #fff;
+ border-radius: 12px;
+ width: 90%;
+ max-width: 450px;
+ box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+ position: relative;
+ padding: 20px;
+ animation: slideIn 0.3s ease-out;
 }
 
 /* CGV 팝업을 참고한 좌측 상단 디자인 요소 */
 .modal-design-dot {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #e74c3c; /* 빨간 녹화 버튼 느낌 */
+ position: absolute;
+ top: 15px;
+ left: 15px;
+ width: 12px;
+ height: 12px;
+ border-radius: 50%;
+
 }
 
 .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 1.3em;
-    color: #95a5a6;
-    cursor: pointer;
-    transition: color 0.2s;
+ position: absolute;
+ top: 15px;
+ right: 15px;
+ font-size: 1.3em;
+ color: #95a5a6;
+ cursor: pointer;
+ transition: color 0.2s;
 }
 
+/* 4. 모달 (팝업) 스타일 - 깔끔한 카드 스타일 섹션에서 수정 */
+
 #modal-place-name {
-    font-size: 1.8em;
-    font-weight: 900;
-    margin: 5px 0 15px 35px; 
-    color: #34495e;
+ font-size: 1.8em;
+ font-weight: 900;
+ /* 🚨 수정: 왼쪽 마진을 0으로 설정하여 부모 요소 (.modal-content)의 padding 20px에 맞춰 정렬 */
+ margin: 5px 0 15px 0; 
+ color: #34495e;
 }
 
 /* 색깔별 뱃지 스타일 */
 #modal-color-badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 700;
-    margin-bottom: 20px;
+ display: inline-block;
+ padding: 6px 12px;
+ border-radius: 6px;
+ color: #fff;
+ font-size: 0.9em;
+ font-weight: 700;
+ /* 🚨 수정 2-1: 뱃지 아래 여백을 줄임 (20px -> 10px) */
+ margin-bottom: 10px;
 }
 
 /* 뱃지 색상 정의 */
@@ -246,56 +251,55 @@ body {
 
 
 .modal-body-text {
-    padding: 0 5px;
+ /* 🚨 수정 2-2: 메인 텍스트의 상하 패딩을 줄임 (0 5px 유지) */
+ padding: 0.5px;
 }
 
 #modal-memory-main {
-    line-height: 1.7;
-    font-size: 1.1em;
-    font-weight: 400;
-    color: #333;
-    margin-bottom: 15px;
+ line-height: 1.7;
+ font-size: 1.1em;
+ font-weight: 400;
+ color: #333;
+ margin-bottom: 15px;
 }
 
 .modal-sub-quote {
-    font-style: italic;
-    color: #555;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-left: 4px solid #3498db; 
-    line-height: 1.5;
-    font-size: 0.95em;
-    margin-top: 15px;
+ font-style: italic;
+ color: #555;
+ background-color: #f9f9f9;
+ padding: 10px;
+ border-left: 4px solid #3498db;
+ line-height: 1.5;
+ font-size: 0.95em;
+ margin-top: 15px;
 }
 
 .modal-footer-age {
-    text-align: right;
-    margin-top: 20px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
+ text-align: right;
+ /* 🚨 수정 2-3: 나이 정보 푸터의 상단 여백을 줄임 (20px -> 10px) */
+ margin-top: 10px;
+ padding-top: 10px;
+ border-top: 1px solid #eee;
 }
 
 #modal-age-info {
-    font-size: 0.9em;
-    color: #7f8c8d;
-    margin: 0;
+ font-size: 0.9em;
+ color: #7f8c8d;
+ margin: 0;
 }
 
 @keyframes slideIn {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
+ from { opacity: 0; transform: translateY(-30px); }
+ to { opacity: 1; transform: translateY(0); }
 }
 
-/* style.css 파일에 아래 코드를 추가/수정합니다. */
-
-/* 장소 마커 이름 (텍스트) 숨기기 */
-.marker .marker-name, 
-.marker div.marker-name { /* 두 가지 텍스트 요소 모두 숨김 */
-    /* 현재 마커의 텍스트가 표시되는 모든 CSS 선택자에 이 속성을 적용합니다. */
-    display: none !important; /* !important를 사용하여 다른 스타일보다 우선순위를 높일 수 있습니다. */
+/* 마커 이름 숨김 부분 (원래 요청에는 없었지만, 주신 코드에 포함되어 있어 유지합니다) */
+.marker .marker-name,
+.marker div.marker-name { 
+  display: none !important; 
 }
 
-/* 마커 점(dot) 자체는 계속 표시됨 */
+/* 마커 점(dot) 자체는 계속 표시됨 (원래 요청에는 없었지만, 주신 코드에 포함되어 있어 유지합니다) */
 .marker {
-    /* ... (기존 스타일 유지) */
+  /* ... (기존 스타일 유지) */
 }
